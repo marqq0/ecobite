@@ -1,0 +1,108 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "EcoBite user profile containing points and role identifiers",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["recipient", "restaurant"] },
+        "avatar": { "type": "string" },
+        "points": { "type": "integer" },
+        "isPremium": { "type": "boolean" },
+        "savedCO2": { "type": "number" }
+      },
+      "required": ["uid", "email", "name", "role", "avatar", "points"]
+    },
+    "FoodListing": {
+      "title": "FoodListing",
+      "description": "Zero-waste surplus announcement item published by merchants",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "restaurantId": { "type": "string" },
+        "restaurantName": { "type": "string" },
+        "restaurantAddress": { "type": "string" },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string", "enum": ["bakery", "meal", "grocery", "dessert"] },
+        "originalPrice": { "type": "number" },
+        "discountedPrice": { "type": "number" },
+        "quantity": { "type": "integer" },
+        "durationLeft": { "type": "integer" },
+        "expiryTime": { "type": "string" },
+        "dietaryTags": { "type": "array" },
+        "imageUrl": { "type": "string" },
+        "co2Saved": { "type": "number" },
+        "status": { "type": "string", "enum": ["available", "claimed", "completed"] }
+      },
+      "required": [
+        "id",
+        "restaurantId",
+        "restaurantName",
+        "restaurantAddress",
+        "lat",
+        "lng",
+        "title",
+        "category",
+        "originalPrice",
+        "discountedPrice",
+        "quantity",
+        "durationLeft",
+        "expiryTime",
+        "imageUrl",
+        "co2Saved",
+        "status"
+      ]
+    },
+    "Reservation": {
+      "title": "Reservation",
+      "description": "Claim records matching zero-waste operations",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "listingId": { "type": "string" },
+        "listingTitle": { "type": "string" },
+        "restaurantName": { "type": "string" },
+        "recipientId": { "type": "string" },
+        "recipientName": { "type": "string" },
+        "quantity": { "type": "integer" },
+        "totalPrice": { "type": "number" },
+        "pickupCode": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "status": { "type": "string", "enum": ["reserved", "completed", "cancelled"] }
+      },
+      "required": [
+        "id",
+        "listingId",
+        "listingTitle",
+        "restaurantName",
+        "recipientId",
+        "recipientName",
+        "quantity",
+        "totalPrice",
+        "pickupCode",
+        "createdAt",
+        "status"
+      ]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profile definitions"
+    },
+    "listings/{listingId}": {
+      "schema": "FoodListing",
+      "description": "Surplus listings details"
+    },
+    "reservations/{reservationId}": {
+      "schema": "Reservation",
+      "description": "Active and completed rescue reservations"
+    }
+  }
+}
